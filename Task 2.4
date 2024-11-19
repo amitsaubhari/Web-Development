@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic To-Do List</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .todo-container {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .task-input {
+      display: flex;
+      margin-bottom: 20px;
+    }
+
+    .task-input input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px 0 0 5px;
+      font-size: 14px;
+    }
+
+    .task-input button {
+      padding: 10px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 0 5px 5px 0;
+      cursor: pointer;
+    }
+
+    .task-input button:hover {
+      background-color: #0056b3;
+    }
+
+    .task-list {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .task-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #f9f9f9;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .task-list li button {
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      padding: 5px 10px;
+    }
+
+    .task-list li button:hover {
+      background-color: #cc0000;
+    }
+  </style>
+</head>
+<body>
+  <div class="todo-container">
+    <h2>To-Do List</h2>
+    <div class="task-input">
+      <input type="text" id="taskInput" placeholder="Enter a new task">
+      <button id="addTaskButton">Add</button>
+    </div>
+    <ul class="task-list" id="taskList">
+      <!-- Tasks will appear here -->
+    </ul>
+  </div>
+
+  <script>
+    const taskInput = document.getElementById('taskInput');
+    const addTaskButton = document.getElementById('addTaskButton');
+    const taskList = document.getElementById('taskList');
+
+    // Function to add a new task
+    function addTask() {
+      const taskText = taskInput.value.trim();
+      if (taskText === '') {
+        alert('Please enter a task!');
+        return;
+      }
+
+      // Create a new list item
+      const li = document.createElement('li');
+      li.textContent = taskText;
+
+      // Add a remove button
+      const removeButton = document.createElement('button');
+      removeButton.textContent = 'Remove';
+      removeButton.addEventListener('click', () => {
+        taskList.removeChild(li);
+      });
+
+      li.appendChild(removeButton);
+      taskList.appendChild(li);
+
+      // Clear the input field
+      taskInput.value = '';
+    }
+
+    // Event listener for the Add button
+    addTaskButton.addEventListener('click', addTask);
+
+    // Allow "Enter" key to add tasks
+    taskInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        addTask();
+      }
+    });
+  </script>
+</body>
+  <title>Dynamic Image Gallery</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    .image-input {
+      display: flex;
+      margin-bottom: 20px;
+    }
+
+    .image-input input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px 0 0 5px;
+    }
+
+    .image-input button {
+      padding: 10px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 0 5px 5px 0;
+      cursor: pointer;
+    }
+
+    .image-input button:hover {
+      background-color: #0056b3;
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .gallery .image-item {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .gallery .image-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .gallery .image-item button {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 25px;
+      height: 25px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .gallery .image-item button:hover {
+      background-color: #cc0000;
+    }
+  </style>
+</head>
+<body>
+  <h2>Image Gallery</h2>
+  <div class="image-input">
+    <input type="text" id="imageUrl" placeholder="Enter image URL">
+    <button id="addImageButton">Add Image</button>
+  </div>
+  <div class="gallery" id="gallery">
+    <!-- Images will appear here -->
+  </div>
+
+  <script>
+    const imageUrlInput = document.getElementById('imageUrl');
+    const addImageButton = document.getElementById('addImageButton');
+    const gallery = document.getElementById('gallery');
+
+    // Function to add a new image
+    function addImage() {
+      const imageUrl = imageUrlInput.value.trim();
+      if (imageUrl === '') {
+        alert('Please enter an image URL!');
+        return;
+      }
+
+      // Create a new image container
+      const div = document.createElement('div');
+      div.classList.add('image-item');
+
+      const img = document.createElement('img');
+      img.src = imageUrl;
+
+      const removeButton = document.createElement('button');
+      removeButton.textContent = 'X';
+      removeButton.addEventListener('click', () => {
+        gallery.removeChild(div);
+      });
+
+      div.appendChild(img);
+      div.appendChild(removeButton);
+      gallery.appendChild(div);
+
+      // Clear the input field
+      imageUrlInput.value = '';
+    }
+
+    // Event listener for the Add button
+    addImageButton.addEventListener('click', addImage);
+
+    // Allow "Enter" key to add images
+    imageUrlInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        addImage();
+      }
+    });
+  </script>
+</body>
+</html>
