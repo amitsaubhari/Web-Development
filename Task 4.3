@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Attractive Product Page</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 40px;
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        /* Filter and Sort Section */
+        .filter-sort-section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            gap: 20px;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        .filter, .sort {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            font-size: 1.1rem;
+        }
+
+        .filter select, .sort select {
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            width: 200px;
+            cursor: pointer;
+            background-color: #ecf0f1;
+        }
+
+        .filter select:focus, .sort select:focus {
+            outline-color: #3498db;
+        }
+
+        .filter label, .sort label {
+            font-weight: bold;
+            color: #34495e;
+        }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            justify-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .product-card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 280px;
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card img:hover {
+            transform: scale(1.1);
+        }
+
+        .product-card h3 {
+            margin: 15px 0;
+            font-size: 1.3rem;
+            color: #2c3e50;
+        }
+
+        .product-card p {
+            color: #7f8c8d;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #27ae60;
+            margin-bottom: 15px;
+        }
+
+        .rating {
+            margin-top: 10px;
+            font-size: 1.1rem;
+            color: #f39c12;
+        }
+
+        .rating span {
+            font-size: 1.4rem;
+            margin-right: 5px;
+        }
+
+        .availability {
+            margin-top: 10px;
+            font-size: 1rem;
+            color: #3498db;
+            font-weight: 500;
+        }
+
+        .shipping-info {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-top: 10px;
+        }
+
+        .add-to-cart {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+            text-decoration: none;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            background-color: #2980b9;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .filter-sort-section {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+
+            .filter select, .sort select {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Our Latest Products</h1>
+
+        <!-- Filter and Sort Section -->
+        <div class="filter-sort-section">
+            <!-- Category Filter -->
+            <div class="filter">
+                <label for="categoryFilter">Category:</label>
+                <select id="categoryFilter">
+                    <option value="all">All</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="clothing">Clothing</option>
+                    <option value="home">Home</option>
+                </select>
+            </div>
+
+            <!-- Price Filter -->
+            <div class="filter">
+                <label for="priceFilter">Price Range:</label>
+                <select id="priceFilter">
+                    <option value="all">All</option>
+                    <option value="0-50">Under $50</option>
+                    <option value="50-100">$50 - $100</option>
+                    <option value="100-200">$100 - $200</option>
+                </select>
+            </div>
+
+            <!-- Sort by Rating -->
+            <div class="sort">
+                <label for="ratingSort">Sort by Rating:</label>
+                <select id="ratingSort">
+                    <option value="high">Highest to Lowest</option>
+                    <option value="low">Lowest to Highest</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Product Grid -->
+        <div class="product-grid" id="productGrid">
+            <!-- Products will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        // Example Product Data with images
+        const products = [
+            { id: 1, name: 'Laptop', category: 'electronics', price: 799, rating: 4.5, image: 'https://via.placeholder.com/280x180?text=Laptop', description: 'A powerful laptop for work and play.', availability: 'In Stock', shippingInfo: 'Free Shipping', features: 'Fast performance, Long battery life' },
+            { id: 2, name: 'Shirt', category: 'clothing', price: 29, rating: 4.2, image: 'https://via.placeholder.com/280x180?text=Shirt', description: 'A stylish shirt for any occasion.', availability: 'In Stock', shippingInfo: 'Free Shipping', features: 'Soft material, Comfortable fit' },
+            { id: 3, name: 'Smartphone', category: 'electronics', price: 499, rating: 4.8, image: 'https://via.placeholder.com/280x180?text=Smartphone', description: 'Latest model with amazing features.', availability: 'Out of Stock', shippingInfo: 'Free Shipping', features: 'High-resolution camera, Large display' },
+            { id: 4, name: 'Couch', category: 'home', price: 150, rating: 4.3, image: 'https://via.placeholder.com/280x180?text=Couch', description: 'A comfortable couch for your living room.', availability: 'In Stock', shippingInfo: 'Free Shipping', features: 'Durable fabric, Comfortable seating' },
+            { id: 5, name: 'Jeans', category: 'clothing', price: 69, rating: 3.9, image: 'https://via.placeholder.com/280x180?text=Jeans', description: 'Durable and stylish jeans.', availability: 'In Stock', shippingInfo: 'Free Shipping', features: 'Stretchable, Stylish design' },
+            { id: 6, name: 'Headphones', category: 'electronics', price: 89, rating: 4.1, image: 'https://via.placeholder.com/280x180?text=Headphones', description: 'Noise-canceling headphones for better sound.', availability: 'In Stock', shippingInfo: 'Free Shipping', features: 'Bluetooth, Noise cancellation' },
+        ];
+
+        // Function to display products
+        function displayProducts(products) {
+            const productGrid = document.getElementById('productGrid');
+            productGrid.innerHTML = ''; // Clear the grid first
+
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.classList.add('product-card');
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>${product.description}</p>
+                    <p class="price">$${product.price}</p>
+                    <p class="rating">Rating: <span>${product.rating}</span> ⭐</p>
+                    <p class="availability">${product.availability}</p>
+                    <p class="shipping-info">${product.shippingInfo}</p>
+                    <button class="add-to-cart">Add to Cart</button>
+                `;
+                productGrid.appendChild(productCard);
+            });
+        }
+
+        // Filter and Sort Products
+        function filterAndSortProducts() {
+            let filteredProducts = products;
+
+            // Filter by category
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            if (categoryFilter !== 'all') {
+                filteredProducts = filteredProducts.filter(product => product.category === categoryFilter);
+            }
+
+            // Filter by price
+            const priceFilter = document.getElementById('priceFilter').value;
+            if (priceFilter !== 'all') {
+                const [minPrice, maxPrice] = priceFilter.split('-').map(Number);
+                filteredProducts = filteredProducts.filter(product => product.price >= minPrice && product.price <= maxPrice);
+            }
+
+            // Sort by rating
+            const ratingSort = document.getElementById('ratingSort').value;
+            if (ratingSort === 'high') {
+                filteredProducts = filteredProducts.sort((a, b) => b.rating - a.rating);
+            } else {
+                filteredProducts = filteredProducts.sort((a, b) => a.rating - b.rating);
+            }
+
+            displayProducts(filteredProducts);
+        }
+
+        // Event listeners for filters and sorting
+        document.getElementById('categoryFilter').addEventListener('change', filterAndSortProducts);
+        document.getElementById('priceFilter').addEventListener('change', filterAndSortProducts);
+        document.getElementById('ratingSort').addEventListener('change', filterAndSortProducts);
+
+        // Initial product display
+        displayProducts(products);
+    </script>
+</body>
+</html>
