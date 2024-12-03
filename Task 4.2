@@ -1,0 +1,372 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Enhanced To-Do List</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .todo-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .todo-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        h2 {
+            text-align: center;
+            color: #4caf50;
+            margin-bottom: 15px;
+        }
+
+        /* Input Styling */
+        .todo-input {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .todo-input:focus {
+            border-color: #4caf50;
+        }
+
+        .task-category, .due-date {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            border: 2px solid #ddd;
+        }
+
+        .due-date {
+            border-color: #ff6347;
+        }
+
+        .task-category:focus, .due-date:focus {
+            border-color: #4caf50;
+        }
+
+        .filter-buttons, .sort-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .filter-buttons button, .sort-buttons button {
+            padding: 10px 18px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .filter-buttons button:hover, .sort-buttons button:hover {
+            background-color: #0056b3;
+        }
+
+        .todo-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .todo-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fff;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .todo-item.done {
+            text-decoration: line-through;
+            color: gray;
+        }
+
+        .todo-item:hover {
+            background-color: #f9f9f9;
+            transform: translateY(-3px);
+        }
+
+        .todo-item button {
+            background-color: #e74c3c;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .todo-item button:hover {
+            background-color: #c0392b;
+        }
+
+        .priority {
+            background-color: #ff9800;
+            color: white;
+            padding: 5px 12px;
+            font-weight: bold;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .clear-all {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .clear-all:hover {
+            background-color: #2980b9;
+        }
+
+        /* Additional content styling */
+        .task-details {
+            display: none;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .show-more-button {
+            background-color: #4caf50;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: none;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .show-more-button:hover {
+            background-color: #388e3c;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .todo-container {
+                padding: 15px;
+                width: 90%;
+            }
+
+            .filter-buttons, .sort-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .filter-buttons button, .sort-buttons button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="todo-container">
+        <h2>Enhanced To-Do List</h2>
+        
+        <!-- Input fields for task -->
+        <input type="text" id="taskInput" class="todo-input" placeholder="Add a new task..." />
+        <input type="text" id="categoryInput" class="task-category" placeholder="Enter category (Work, Personal, etc.)" />
+        <input type="date" id="dueDateInput" class="due-date" placeholder="Enter due date" />
+
+        <!-- Filter and Sort Buttons -->
+        <div class="filter-buttons">
+            <button onclick="filterTasks('all')">All</button>
+            <button onclick="filterTasks('completed')">Completed</button>
+            <button onclick="filterTasks('pending')">Pending</button>
+        </div>
+        <div class="sort-buttons">
+            <button onclick="sortTasks('priority')">Sort by Priority</button>
+            <button onclick="sortTasks('dueDate')">Sort by Due Date</button>
+        </div>
+
+        <!-- Task List -->
+        <ul id="todoList" class="todo-list"></ul>
+
+        <!-- Clear All Button -->
+        <button id="clearAll" class="clear-all">Clear All Tasks</button>
+    </div>
+
+    <script>
+        // DOM elements
+        const taskInput = document.getElementById('taskInput');
+        const categoryInput = document.getElementById('categoryInput');
+        const dueDateInput = document.getElementById('dueDateInput');
+        const todoList = document.getElementById('todoList');
+        const clearAllButton = document.getElementById('clearAll');
+
+        // Load tasks from localStorage
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+        // Display tasks
+        function displayTasks(filteredTasks = tasks) {
+            todoList.innerHTML = '';
+            filteredTasks.forEach((task, index) => {
+                const li = document.createElement('li');
+                li.classList.add('todo-item');
+                if (task.done) li.classList.add('done');
+
+                // Priority
+                const priorityLabel = document.createElement('span');
+                priorityLabel.classList.add('priority');
+                priorityLabel.textContent = task.priority;
+
+                // Task content
+                const showMoreButton = document.createElement('button');
+                showMoreButton.textContent = "Show More";
+                showMoreButton.classList.add('show-more-button');
+                showMoreButton.onclick = () => toggleTaskDetails(index);
+
+                const taskDetails = document.createElement('div');
+                taskDetails.classList.add('task-details');
+                taskDetails.id = taskDetails${index};
+                taskDetails.innerHTML = `
+                    <p><strong>Category:</strong> ${task.category}</p>
+                    <p><strong>Due Date:</strong> ${task.dueDate}</p>
+                `;
+
+                li.innerHTML = `
+                    <span onclick="toggleTask(${index})">${task.text}</span>
+                    <div>
+                        <button onclick="removeTask(${index})">Delete</button>
+                    </div>
+                `;
+                li.prepend(priorityLabel);
+                li.appendChild(showMoreButton);
+                li.appendChild(taskDetails);
+                todoList.appendChild(li);
+            });
+        }
+
+        // Add a task
+        function addTask(taskText, category, dueDate, priority = 'Low') {
+            if (taskText) {
+                const newTask = {
+                    text: taskText,
+                    category: category,
+                    dueDate: dueDate,
+                    priority: priority,
+                    done: false,
+                    timestamp: new Date().toISOString()
+                };
+                tasks.push(newTask);
+                localStorage.setItem('tasks', JSON.stringify(tasks));
+                displayTasks();
+                taskInput.value = ''; 
+                categoryInput.value = '';
+                dueDateInput.value = '';
+            }
+        }
+
+        // Toggle task completion
+        function toggleTask(index) {
+            tasks[index].done = !tasks[index].done;
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+            displayTasks();
+        }
+
+        // Toggle task details visibility
+        function toggleTaskDetails(index) {
+            const taskDetails = document.getElementById(taskDetails${index});
+            taskDetails.style.display = taskDetails.style.display === "none" || taskDetails.style.display === "" ? "block" : "none";
+        }
+
+        // Remove task
+        function removeTask(index) {
+            tasks.splice(index, 1);
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+            displayTasks();
+        }
+
+        // Clear all tasks
+        clearAllButton.addEventListener('click', () => {
+            tasks = [];
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+            displayTasks();
+        });
+
+        // Filter tasks based on status
+        function filterTasks(status) {
+            let filteredTasks;
+            if (status === 'completed') {
+                filteredTasks = tasks.filter(task => task.done);
+            } else if (status === 'pending') {
+                filteredTasks = tasks.filter(task => !task.done);
+            } else {
+                filteredTasks = tasks;
+            }
+            displayTasks(filteredTasks);
+        }
+
+        // Sort tasks by priority or due date
+        function sortTasks(criterion) {
+            if (criterion === 'priority') {
+                tasks.sort((a, b) => {
+                    const priorityOrder = ['Low', 'Medium', 'High'];
+                    return priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority);
+                });
+            } else if (criterion === 'dueDate') {
+                tasks.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+            }
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+            displayTasks();
+        }
+
+        // Add task on Enter key
+        taskInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                addTask(taskInput.value, categoryInput.value, dueDateInput.value);
+            }
+        });
+
+        // Initialize
+        displayTasks();
+    </script>
+</body>
+</html>
