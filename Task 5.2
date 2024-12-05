@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enhanced Optimized Web App</title>
+  <style>
+    /* Minimized and enhanced CSS */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f4f8;
+      color: #333;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      box-sizing: border-box;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    header {
+      background-color: #007BFF;
+      color: #ffffff;
+      padding: 1rem 0;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      margin: 0;
+      padding: 0;
+      font-size: 2rem;
+      animation: fadeIn 1s ease-in;
+    }
+    .container {
+      padding: 20px;
+      max-width: 800px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* Center content horizontally */
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 20px auto; /* Center images and add space */
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+    }
+    img:hover {
+      transform: scale(1.05);
+    }
+    .carousel {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding: 10px 0;
+      margin: 20px 0;
+      width: 100%;
+      justify-content: center;
+    }
+    .carousel img {
+      flex: 0 0 auto;
+      width: 300px;
+      height: 200px;
+      margin: 10px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+    }
+    .carousel img:hover {
+      transform: scale(1.05);
+    }
+    p {
+      margin: 20px auto;
+      padding: 15px;
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      animation: slideIn 1s ease-in-out;
+    }
+    button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+      margin: 10px 0;
+    }
+    button:hover {
+      background-color: #0056b3;
+      transform: translateY(-3px);
+    }
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+    }
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 160px;
+      background-color: #555;
+      color: #fff;
+      text-align: center;
+      padding: 5px;
+      border-radius: 6px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%; /* Position above */
+      left: 50%;
+      margin-left: -80px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+    .dark-mode {
+      background-color: #333;
+      color: #f0f4f8;
+    }
+    .dark-mode button {
+      background-color: #555;
+    }
+    .dark-mode button:hover {
+      background-color: #888;
+    }
+    footer {
+      background-color: #007BFF;
+      color: #ffffff;
+      padding: 1rem 0;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+      margin-top: auto;
+    }
+    footer p {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideIn {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @media (max-width: 768px) {
+      img, .carousel img {
+        max-width: 100%;
+      }
+      .carousel {
+        flex-direction: column;
+        overflow-x: visible;
+      }
+      p {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Welcome to the Enhanced Web App</h1>
+  </header>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#features">Features</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <div class="container">
+    <!-- Image Carousel -->
+    <h2>Image Carousel</h2>
+    <div class="carousel">
+      <img src="image1.jpg" alt="Image 1" loading="lazy">
+      <img src="image2.jpg" alt="Image 2" loading="lazy">
+      <img src="image3.jpg" alt="Image 3" loading="lazy">
+      <img src="image4.jpg" alt="Image 4" loading="lazy">
+    </div>
+    <!-- Centered Image -->
+    <img src="example.jpg" alt="Example Image" loading="lazy">
+    <p>Experience a modern web app with optimized loading, interactive elements, and a sleek design.</p>
+    <div class="tooltip">Hover over me
+      <span class="tooltiptext">This button triggers an alert!</span>
+    </div>
+    <button id="infoButton">Click for More Info</button>
+    <button id="darkModeToggle">Toggle Dark Mode</button>
+  </div>
+
+  <!-- Contact Form -->
+  <div class="container">
+    <h2>Contact Us</h2>
+    <form id="contactForm">
+      <input type="text" placeholder="Name" required style="margin-bottom: 10px; padding: 10px; width: 100%; border-radius: 5px; border: 1px solid #ddd;">
+      <input type="email" placeholder="Email" required style="margin-bottom: 10px; padding: 10px; width: 100%; border-radius: 5px; border: 1px solid #ddd;">
+      <textarea placeholder="Message" rows="4" required style="margin-bottom: 10px; padding: 10px; width: 100%; border-radius: 5px; border: 1px solid #ddd;"></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+
+  <!-- Social Media Section -->
+  <div class="container">
+    <h2>Follow Us</h2>
+    <a href="https://facebook.com" target="_blank" style="margin: 0 10px;"><img src="facebook-icon.png" alt="Facebook" style="width: 40px; height: 40px;"></a>
+    <a href="https://twitter.com" target="_blank" style="margin: 0 10px;"><img src="twitter-icon.png" alt="Twitter" style="width: 40px; height: 40px;"></a>
+    <a href="https://instagram.com" target="_blank" style="margin: 0 10px;"><img src="instagram-icon.png" alt="Instagram" style="width: 40px; height: 40px;"></a>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2024 Enhanced Web App. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Minimized JavaScript with added interactivity
+    document.addEventListener("DOMContentLoaded", function() {
+      console.log("JavaScript is optimized and loaded!");
+
+      document.getElementById('infoButton').addEventListener('click', function() {
+        alert('You clicked the button! This is an example of interactive JavaScript.');
+      });
+
+      // Dark mode toggle functionality
+      const darkModeToggle = document.getElementById('darkModeToggle');
+      darkModeToggle.addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+        darkModeToggle.textContent = document.body.classList.contains('dark-mode') ? 'Light Mode' : 'Dark Mode';
+      });
+
+      // Form submit event
+      document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Your message has been sent!');
+        // Here, add logic to actually send the form data (e.g., AJAX request)
+      });
+    });
+  </script>
+</body>
+</html>
