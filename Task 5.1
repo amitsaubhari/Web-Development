@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce Site</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #cart-info {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px;
+        }
+
+        main {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .product {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 15px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.3s;
+        }
+
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .product img {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .product h2 {
+            font-size: 1.6em;
+            margin: 5px 0;
+        }
+
+        .product .price {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #28a745;
+            margin: 10px 0;
+        }
+
+        .product .rating {
+            color: #f39c12;
+            margin-bottom: 10px;
+        }
+
+        .product .specs,
+        .product .availability,
+        .product .discount {
+            font-size: 0.9em;
+            color: #777;
+            margin-bottom: 10px;
+        }
+
+        .product .tags {
+            font-size: 0.9em;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        .product .reviews {
+            font-size: 0.9em;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .product button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .product button:hover {
+            background-color: #218838;
+        }
+
+        .related-products {
+            width: 100%;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .related-products h2 {
+            margin-bottom: 15px;
+        }
+
+        .related-products .product {
+            display: inline-block;
+            width: 200px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>E-commerce Site</h1>
+        <div id="cart-info">
+            <span>Items in Cart: <span id="cart-count">0</span></span>
+            <span>Total: $<span id="cart-total">0.00</span></span>
+        </div>
+    </header>
+    <main>
+        <section id="product-list">
+            <!-- Products will be listed here dynamically -->
+        </section>
+        <section id="related-products">
+            <h2>Related Products</h2>
+            <div id="related-list"></div>
+        </section>
+    </main>
+    <script>
+        // Sample data for products with more details
+        const products = [
+            {
+                id: 1,
+                name: 'Laptop',
+                price: 999.99,
+                image: 'https://via.placeholder.com/300x200?text=Laptop',
+                description: 'High performance laptop with 16GB RAM and 512GB SSD.',
+                rating: 4.5,
+                specs: 'Color: Silver, Size: 15.6 inches, Weight: 2.5kg',
+                availability: 'In Stock',
+                discount: '10% off',
+                tags: ['New', 'Popular'],
+                reviews: [
+                    { user: 'John', comment: 'Great performance!', rating: 5 },
+                    { user: 'Sara', comment: 'Slightly heavy but excellent for gaming.', rating: 4 }
+                ]
+            },
+            {
+                id: 2,
+                name: 'Smartphone',
+                price: 499.99,
+                image: 'https://via.placeholder.com/300x200?text=Smartphone',
+                description: 'Latest smartphone with an ultra-clear camera and 5G connectivity.',
+                rating: 4.7,
+                specs: 'Color: Black, Size: 6.5 inches, Weight: 180g',
+                availability: 'In Stock',
+                discount: '15% off',
+                tags: ['Best Seller', 'Hot Deal'],
+                reviews: [
+                    { user: 'Alex', comment: 'Excellent camera quality!', rating: 5 },
+                    { user: 'Emily', comment: 'Battery life could be better.', rating: 4 }
+                ]
+            },
+            {
+                id: 3,
+                name: 'Headphones',
+                price: 89.99,
+                image: 'https://via.placeholder.com/300x200?text=Headphones',
+                description: 'Noise-cancelling headphones with deep bass and long battery life.',
+                rating: 4.2,
+                specs: 'Color: Black, Battery Life: 20 hours',
+                availability: 'Out of Stock',
+                discount: '5% off',
+                tags: ['Popular', 'Budget-friendly'],
+                reviews: [
+                    { user: 'Sam', comment: 'Sound quality is amazing!', rating: 5 },
+                    { user: 'Taylor', comment: 'Comfortable, but a bit tight on the head.', rating: 3 }
+                ]
+            },
+            {
+                id: 4,
+                name: 'Smart Watch',
+                price: 199.99,
+                image: 'https://via.placeholder.com/300x200?text=Smart+Watch',
+                description: 'Smart watch with heart rate monitoring and fitness tracking.',
+                rating: 4.0,
+                specs: 'Color: Blue, Size: 1.5 inches, Weight: 50g',
+                availability: 'In Stock',
+                discount: 'No discount',
+                tags: ['Featured', 'Tech'],
+                reviews: [
+                    { user: 'Chris', comment: 'Helps keep track of workouts efficiently.', rating: 4 },
+                    { user: 'Jordan', comment: 'Battery life isn’t as good as I expected.', rating: 3 }
+                ]
+            }
+        ];
+
+        // Function to display products
+        function displayProducts() {
+            const productList = document.getElementById('product-list');
+            productList.innerHTML = ''; // Clear existing products
+
+            products.forEach(product => {
+                const productDiv = document.createElement('div');
+                productDiv.className = 'product';
+                productDiv.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h2>${product.name}</h2>
+                    <p class="price">$${product.price.toFixed(2)}</p>
+                    <p>${product.description}</p>
+                    <p class="rating">Rating: ${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5 - Math.floor(product.rating))} (${product.rating.toFixed(1)})</p>
+                    <p class="specs">${product.specs}</p>
+                    <p class="availability">${product.availability}</p>
+                    <p class="discount">${product.discount}</p>
+                    <p class="tags">Tags: ${product.tags.join(', ')}</p>
+                    <div class="reviews">
+                        <strong>Customer Reviews:</strong>
+                        ${product.reviews.map(review => <p>${review.user}: "${review.comment}" - ${'★'.repeat(review.rating)} (${review.rating}/5)</p>).join('')}
+                    </div>
+                    <button onclick="addToCart(${product.id})">Add to Cart</button>
+                `;
+                productList.appendChild(productDiv);
+            });
+        }
+
+        // Function to display related products
+        function displayRelatedProducts() {
+            const relatedList = document.getElementById('related-list');
+            relatedList.innerHTML = ''; // Clear existing related products
+
+            products.slice(0, 3).forEach(product => {
+                const productDiv = document.createElement('div');
+                productDiv.className = 'product';
+                productDiv.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h2>${product.name}</h2>
+                    <p class="price">$${product.price.toFixed(2)}</p>
+                    <button onclick="addToCart(${product.id})">Add to Cart</button>
+                `;
+                relatedList.appendChild(productDiv);
+            });
+        }
+
+        // Cart data
+        let cart = [];
+        let cartCount = 0;
+        let cartTotal = 0.0;
+
+        // Function to add items to the cart
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                cart.push(product);
+                cartCount++;
+                cartTotal += product.price;
+
+                // Update cart information
+                document.getElementById('cart-count').textContent = cartCount;
+                document.getElementById('cart-total').textContent = cartTotal.toFixed(2);
+                alert(${product.name} has been added to your cart!);
+            }
+        }
+
+        // Initial display of products and related products
+        displayProducts();
+        displayRelatedProducts();
+    </script>
+</body>
+</html>
